@@ -218,6 +218,27 @@ The same `Dockerfile` can be deployed to any container host that supports
 Docker. Configure the provider keys as runtime environment variables and keep
 `/health` as the health-check URL.
 
+## Run in GitHub Codespaces
+
+This repository includes `.devcontainer/devcontainer.json`, which installs the
+Python dependencies and forwards port `8000` automatically.
+
+1. Open the repository on GitHub and select **Code**, **Codespaces**, then
+    **Create codespace on main**.
+2. Wait for the container setup to finish.
+3. Add `GEMINI_API_KEY` and `TAVILY_API_KEY` as Codespaces secrets, or create a
+    local `.env` file inside the Codespace using `.env.example` as the template.
+4. Start the server:
+
+```bash
+python ui_server.py
+```
+
+5. Open forwarded port `8000` from the **Ports** panel.
+
+Codespaces is useful for a private development demo. Keep the forwarded port
+private unless you intentionally want to share the app, and never commit `.env`.
+
 ## Example Input
 
 ```text
