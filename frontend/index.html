@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zephra Research Agent</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">Z</span>
+          <div>
+            <p class="eyebrow">Zephra AI</p>
+            <h1>Research Agent</h1>
+          </div>
+        </div>
+        <div class="topbar-meta">
+          <span class="status-pill live"><span class="status-dot"></span>Evidence-grounded</span>
+          <span class="version">v1.0 / local workspace</span>
+          <button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch theme">
+            <span class="theme-icon" aria-hidden="true">☼</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow">Multi-source intelligence</p>
+          <h2>Turn open questions into<br /><em>traceable answers.</em></h2>
+        </div>
+        <p class="intro-copy">Zephra searches, compares, and synthesizes evidence so every conclusion has a trail back to its sources.</p>
+      </section>
+
+      <main class="app-grid">
+        <section class="panel query-panel">
+          <div class="panel-header">
+            <div class="section-index">01</div>
+            <div>
+              <p class="eyebrow">Research prompt</p>
+              <h2>Ask a question</h2>
+            </div>
+          </div>
+
+          <label class="field-label" for="question">What do you want to investigate?</label>
+          <textarea id="question" rows="6" placeholder="Compare the advantages and limitations of retrieval-augmented generation with fine-tuning for enterprise AI."></textarea>
+
+          <div class="prompt-suggestions">
+            <span class="suggestion-label">Try an example</span>
+            <button class="suggestion" data-question="What are the main advantages and limitations of retrieval-augmented generation compared with fine-tuning for enterprise AI applications?">RAG vs fine-tuning</button>
+            <button class="suggestion" data-question="What are the most important risks and safeguards when deploying generative AI in a business?">GenAI deployment risks</button>
+          </div>
+
+          <div class="actions">
+            <button id="submitBtn" class="primary-btn"><span>Run research</span><span class="button-arrow">↗</span></button>
+            <button id="demoBtn" class="secondary-btn">Load demo</button>
+          </div>
+
+          <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <span>Gathering evidence from multiple sources…</span>
+          </div>
+
+          <div class="meta-grid">
+            <div class="meta-item">
+              <span class="meta-label">Retrieval</span>
+              <strong><span class="metric-dot"></span>2 providers</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Mode</span>
+              <strong>Grounded synthesis</strong>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Conflict handling</span>
+              <strong>Explicit</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel result-panel">
+          <div class="panel-header">
+            <div class="section-index">02</div>
+            <div>
+              <p class="eyebrow">Latest answer</p>
+              <h2>Research summary</h2>
+            </div>
+            <span class="result-state">Awaiting prompt</span>
+          </div>
+
+          <div id="errorBox" class="error-box hidden"></div>
+
+          <div id="resultContent" class="result-content">
+            <div class="placeholder">
+              <div class="placeholder-icon">✦</div>
+              <p>Your evidence-grounded answer will appear here.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
