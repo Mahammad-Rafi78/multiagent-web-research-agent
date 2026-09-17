@@ -78,6 +78,13 @@ async def serve_static(filename: str) -> FileResponse:
     return FileResponse(file_path)
 
 
+@app.get("/{filename}")
+async def serve_frontend_asset(filename: str) -> FileResponse:
+    if filename not in {"app.js", "styles.css"}:
+        raise HTTPException(status_code=404, detail="Frontend asset not found")
+    return FileResponse(FRONTEND_DIR / filename)
+
+
 @app.post("/api/research")
 async def research(request: ResearchRequest) -> dict:
     question = request.question.strip()
