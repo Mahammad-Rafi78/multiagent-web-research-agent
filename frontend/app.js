@@ -10,6 +10,7 @@ const themeToggle = document.getElementById('themeToggle');
 const themeIcon = themeToggle.querySelector('.theme-icon');
 
 const demoQuestion = 'What are the main advantages and limitations of retrieval-augmented generation compared with fine-tuning for enterprise AI applications?';
+const isStaticDeployment = window.location.hostname.endsWith('github.io');
 
 const staticDemoResult = (question) => ({
   demo_mode: true,
@@ -113,6 +114,12 @@ async function runResearch(question) {
   setLoadingState(true);
 
   try {
+    if (isStaticDeployment) {
+      renderResult(staticDemoResult(question));
+      resultState.textContent = 'Static demo response';
+      return;
+    }
+
     const response = await fetch('./api/research', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
