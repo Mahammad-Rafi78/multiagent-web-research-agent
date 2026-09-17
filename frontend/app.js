@@ -11,6 +11,24 @@ const themeIcon = themeToggle.querySelector('.theme-icon');
 
 const demoQuestion = 'What are the main advantages and limitations of retrieval-augmented generation compared with fine-tuning for enterprise AI applications?';
 
+const staticDemoResult = (question) => ({
+  demo_mode: true,
+  question,
+  answer: 'This free static deployment provides a demo response. A live deployment uses the FastAPI service to search multiple providers, compare evidence, and synthesize a cited answer.',
+  supporting_claims: [
+    'Using independent providers reduces dependence on a single search ecosystem.',
+    'Evidence-aware synthesis is more reliable than a one-shot search-to-answer chain.',
+    'Conflict and uncertainty reporting improves trustworthiness.'
+  ],
+  references: [
+    { id: 'S1', title: 'Demo evidence note', url: 'https://example.com/demo' },
+    { id: 'S2', title: 'Research design overview', url: 'https://example.com/design' }
+  ],
+  conflicts: [{ details: 'No conflicting evidence detected in this demo run.' }],
+  missing_evidence: ['Live provider data is unavailable in the static deployment.'],
+  research_run: { queries: [question], providers_attempted: ['demo'], sources_fetched: 0 }
+});
+
 function setTheme(theme) {
   const isLight = theme === 'light';
   document.body.classList.toggle('theme-light', isLight);
@@ -95,7 +113,7 @@ async function runResearch(question) {
   setLoadingState(true);
 
   try {
-    const response = await fetch('/api/research', {
+    const response = await fetch('./api/research', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question })
@@ -109,9 +127,9 @@ async function runResearch(question) {
     renderResult(payload);
     resultState.textContent = payload.demo_mode ? 'Demo response' : 'Live response';
   } catch (error) {
-    showError(error.message || 'Something went wrong while running the research agent.');
-    resultContent.innerHTML = '<div class="placeholder"><p>Unable to load the result.</p></div>';
-    resultState.textContent = 'Request failed';
+    const payload = staticDemoResult(question);
+    renderResult(payload);
+    resultState.textContent = 'Static demo response';
   } finally {
     setLoadingState(false);
   }
